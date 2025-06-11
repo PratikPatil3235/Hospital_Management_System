@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PatientModule } from './patient/patient.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HospitalModule } from './Hospital/hospital.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       inject: [ConfigService],
     }),
     PatientModule,
+    HospitalModule,
   ],
   controllers: [],
   providers: [],

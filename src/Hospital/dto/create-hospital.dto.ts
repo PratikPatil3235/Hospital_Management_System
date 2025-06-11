@@ -1,43 +1,22 @@
 import {
-  IsEnum,
-  IsInt,
+  IsEmail,
   IsNotEmpty,
   IsString,
   Length,
   Matches,
-  Max,
   MaxLength,
-  Min,
 } from 'class-validator';
-import { Gender } from '../gender.enum';
-import { BloodGroup } from '../bloodgroup.enum';
 
-export class CreatePatientDto {
+export class CreateHospitalDto {
   @IsNotEmpty({ message: 'Name is required' })
-  @IsString({ message: 'value entered must be a string' })
-  @MaxLength(200, {
+  @IsString({ message: 'Value entered must be a string' })
+  @MaxLength(100, {
     message: 'Maximum length of name should be 100 characters',
   })
   @Matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/, {
     message: 'Name must contain only letters and single spaces.',
   })
   name: string;
-
-  @IsNotEmpty({ message: 'Age is required' })
-  @IsInt({ message: 'Age must be an integer' })
-  @Min(0, { message: 'age must be greater than 0' })
-  @Max(150, { message: 'Age should not exceed 150' })
-  age: number;
-
-  @IsNotEmpty({ message: 'Gender is required' })
-  @IsEnum(Gender, { message: 'Gender must be one of: male, female, other' })
-  gender: Gender;
-
-  @IsNotEmpty({ message: 'BloodGroup is required' })
-  @IsEnum(BloodGroup, {
-    message: 'BloodGroup must be one of: A+,A-,B+,B-,AB+,AB-,O+,O-',
-  })
-  bloodGroup: BloodGroup;
 
   @IsNotEmpty({ message: 'Address is required' })
   @IsString({ message: 'Value entered must be a string' })
@@ -50,4 +29,15 @@ export class CreatePatientDto {
   @Length(10, 10, { message: 'Phone number must be exactly 10 digits' })
   @Matches(/^[0-9]{10}$/, { message: 'Phone number must contain only digits' })
   phone: string;
+
+  @IsNotEmpty({ message: 'Email is required' })
+  @IsEmail({}, { message: 'Please enter a valid Email addres' })
+  @MaxLength(100, { message: 'Email must not exceed 100 characters' })
+  @IsString({ message: 'Value entered must be a string' })
+  email: string;
+
+  @IsNotEmpty({ message: 'Specialization is required' })
+  @IsString({ message: 'Value entered must be a string' })
+  @MaxLength(100)
+  specialization: string;
 }

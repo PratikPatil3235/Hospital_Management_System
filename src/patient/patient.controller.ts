@@ -1,34 +1,69 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 
 @Controller('patient')
+  @UsePipes(new ValidationPipe({whitelist:true ,forbidNonWhitelisted:true}))
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
   @Post()
-  create(@Body() createPatientDto: CreatePatientDto) {
-    return this.patientService.create(createPatientDto);
+  async create(@Body() createPatientDto: CreatePatientDto) {
+    const data = await this.patientService.create(createPatientDto);
+    return {
+      status: 201,
+      message: 'Patient Created Succesfully',
+      data,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.patientService.findAll();
+  async findAll() {
+    const data = await this.patientService.findAll();
+    return {
+      status: 200,
+      message: 'All Patient fetched succesfully',
+      data,
+    };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.patientService.findOne(+id);
+  @Get('/:id')
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    const data = await this.patientService.findOne(id);
+    return {
+      status: 200,
+      message: 'Patient fetched succesfully...',
+      data,
+    };
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePatientDto: UpdatePatientDto) {
-    return this.patientService.update(+id, updatePatientDto);
+  @Patch('/:id')
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updatePatientDto: UpdatePatientDto,
+  ) {
+    const data = await this.patientService.update(id, updatePatientDto);
+    return {
+      status: 200,
+      message: 'Patient updated succesfully...',
+      data,
+    };
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.patientService.remove(+id);
+  @Delete('/:id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.patientService.remove(id);
   }
 }
