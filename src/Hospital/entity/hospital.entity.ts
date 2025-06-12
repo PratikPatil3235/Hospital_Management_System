@@ -11,7 +11,7 @@ export class Hospital {
   @Column({ length: 500 })
   h_Address: string;
 
-  @Column({ length: 10 })
+  @Column({ length: 10, unique: true })
   h_Phone: string;
 
   @Column({ unique: true, length: 100 })

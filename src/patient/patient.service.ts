@@ -25,6 +25,7 @@ export class PatientService {
         p_Gender: createPatientDto.gender,
         p_Name: createPatientDto.name,
         p_Phone: createPatientDto.phone,
+        p_email: createPatientDto.email,
       });
 
       return this.patientRepository.save(patient);
@@ -71,6 +72,7 @@ export class PatientService {
     paitent.p_BloodGroup = updatePatientDto.bloodGroup ?? paitent.p_BloodGroup;
     paitent.p_Gender = updatePatientDto.gender ?? paitent.p_Gender;
     paitent.p_Phone = updatePatientDto.phone ?? paitent.p_Phone;
+    paitent.p_email = updatePatientDto.email ?? paitent.p_email;
 
     return this.patientRepository.save(paitent);
   }
