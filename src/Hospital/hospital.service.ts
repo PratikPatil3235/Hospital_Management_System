@@ -71,12 +71,12 @@ export class HospitalServices {
     hospital.h_Specialization =
       updateHospitalDto.specialization ?? hospital.h_Specialization;
 
-    return hospital;
+    return this.hospitalRepository.save(hospital);
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      const hospital = await this.hospitalRepository.delete(id);
-      console.log(typeof (hospital.affected))
+    const hospital = await this.hospitalRepository.delete(id);
+    console.log(typeof hospital.affected);
     if (hospital.affected === 0) {
       throw new NotFoundException(`Hospital with id ${id} not found`);
     }
