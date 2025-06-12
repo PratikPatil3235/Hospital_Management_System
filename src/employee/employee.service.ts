@@ -29,11 +29,17 @@ export class EmployeService {
       hospital: { h_Registration_No: hospital.h_Registration_No },
     });
 
-    if (createEmployeeDto.specialization !== undefined && createEmployeeDto.role==="doctor") {
+    if (
+      createEmployeeDto.specialization !== undefined &&
+      createEmployeeDto.role === 'doctor'
+    ) {
       employee.e_Specialization = createEmployeeDto.specialization;
     }
 
-    if (createEmployeeDto.isAvaliable !== undefined && createEmployeeDto.role==="nurse") {
+    if (
+      createEmployeeDto.isAvaliable !== undefined &&
+      createEmployeeDto.role === 'nurse'
+    ) {
       employee.isAvaliable = createEmployeeDto.isAvaliable;
     }
 
@@ -74,12 +80,25 @@ export class EmployeService {
     employee.e_Name = updateEmployeeDto.name ?? employee.e_Name;
     employee.e_Phone = updateEmployeeDto.phone ?? employee.e_Phone;
     employee.e_Role = updateEmployeeDto.role ?? employee.e_Role;
-    employee.e_Specialization =
-      updateEmployeeDto.specialization ?? employee.e_Specialization;
-    employee.isAvaliable =
-      updateEmployeeDto.isAvaliable ?? employee.isAvaliable;
+
     employee.hospital.h_Registration_No =
       updateEmployeeDto.hId ?? employee.hospital.h_Registration_No;
+
+    if (
+      updateEmployeeDto.specialization !== undefined &&
+      updateEmployeeDto.role === 'doctor'
+    ) {
+      employee.e_Specialization =
+        updateEmployeeDto.specialization ?? employee.e_Specialization;
+    }
+
+    if (
+      updateEmployeeDto.isAvaliable !== undefined &&
+      updateEmployeeDto.role === 'nurse'
+    ) {
+      employee.isAvaliable =
+        updateEmployeeDto.isAvaliable ?? employee.isAvaliable;
+    }
 
     return await this.employeeRepository.save(employee);
   }
