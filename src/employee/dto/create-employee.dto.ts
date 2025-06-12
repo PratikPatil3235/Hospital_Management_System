@@ -25,6 +25,7 @@ export class CreateEmployeeDto {
 
   @IsString({ message: 'Value entered must be a string' })
   @MaxLength(100)
+  @IsOptional()
   specialization: string;
 
   @IsNotEmpty({ message: 'Phone number is required' })
