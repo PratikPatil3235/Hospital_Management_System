@@ -29,11 +29,11 @@ export class EmployeService {
       hospital: { h_Registration_No: hospital.h_Registration_No },
     });
 
-    if (createEmployeeDto.specialization !== undefined) {
+    if (createEmployeeDto.specialization !== undefined && createEmployeeDto.role==="doctor") {
       employee.e_Specialization = createEmployeeDto.specialization;
     }
 
-    if (createEmployeeDto.isAvaliable !== undefined) {
+    if (createEmployeeDto.isAvaliable !== undefined && createEmployeeDto.role==="nurse") {
       employee.isAvaliable = createEmployeeDto.isAvaliable;
     }
 
