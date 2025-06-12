@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { EmployeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -17,8 +18,8 @@ export class EmployeeController {
   constructor(private readonly employeService: EmployeService) {}
 
   @Post()
-  create(@Body() createEmployeeDto: CreateEmployeeDto) {
-    const data = this.employeService.create(createEmployeeDto);
+  async create(@Body() createEmployeeDto: CreateEmployeeDto) {
+    const data = await this.employeService.create(createEmployeeDto);
     return {
       status: 201,
       message: 'Employee Created Succesfully ...',
@@ -27,8 +28,8 @@ export class EmployeeController {
   }
 
   @Get()
-  findAll() {
-    const data = this.employeService.findAll();
+  async findAll() {
+    const data = await this.employeService.findAll();
     return {
       status: 200,
       message: 'Employees fetched Succesfully ...',
@@ -37,8 +38,8 @@ export class EmployeeController {
   }
 
   @Get('/:id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    const data = this.employeService.findOne(id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    const data = await this.employeService.findOne(id);
 
     return {
       status: 200,
@@ -48,20 +49,20 @@ export class EmployeeController {
   }
 
   @Patch('/:id')
-  update(
+  async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
-    const data = this.employeService.update(id, updateEmployeeDto);
+    const data = await this.employeService.update(id, updateEmployeeDto);
     return {
-      status: 200,
+      status: HttpStatus.OK,
       message: `Employee with id ${id} updated Succesfully ...`,
       data,
     };
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.employeService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.employeService.remove(id);
   }
 }

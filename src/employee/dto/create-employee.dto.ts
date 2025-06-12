@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   Length,
@@ -38,6 +39,7 @@ export class CreateEmployeeDto {
   email: string;
 
   @IsBoolean({ message: 'avaliblity should have values as true, false' })
+  @IsOptional()
   isAvaliable: boolean;
 
   @IsNotEmpty({ message: 'role is required' })

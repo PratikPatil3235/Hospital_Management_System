@@ -7,7 +7,7 @@ export class Patient {
   @PrimaryGeneratedColumn('uuid')
   p_id: string;
 
-  @Column({length:200})
+  @Column({ length: 200 })
   p_Name: string;
 
   @Column()
@@ -19,7 +19,7 @@ export class Patient {
   })
   p_Gender: Gender;
 
-  @Column({length:150 ,unique:true})
+  @Column({ length: 150, unique: true })
   p_email: string;
 
   @Column({
