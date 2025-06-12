@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HospitalModule } from './Hospital/hospital.module';
 import { EmployeeModule } from './employee/employee.module';
+import { AppointmentModule } from './appointment/appointment.module';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { EmployeeModule } from './employee/employee.module';
     }),
     PatientModule,
     HospitalModule,
-    EmployeeModule
+    EmployeeModule,
   ],
   controllers: [],
   providers: [],
