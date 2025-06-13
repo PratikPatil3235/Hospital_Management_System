@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsOptional,
@@ -18,7 +19,8 @@ export class CreateAmbulanceSystemDto {
       message: 'bookedAt must be a valid ISO date string (e.g., 2025-06-13)',
     },
   )
-  bookedAt?: string;
+  @Type(() => Date)
+  bookedAt?: Date;
 
   @IsUUID('4', { message: 'hospitalId must be a valid UUID v4' })
   @IsNotEmpty({ message: 'Hospital Id is mandatory' })
