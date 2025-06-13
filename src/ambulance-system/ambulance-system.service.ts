@@ -12,15 +12,15 @@ export class AmbulanceSystemService {
     return `This action returns all ambulanceSystem`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} ambulanceSystem`;
   }
 
-  update(id: number, updateAmbulanceSystemDto: UpdateAmbulanceSystemDto) {
+  update(id: string, updateAmbulanceSystemDto: UpdateAmbulanceSystemDto) {
     return `This action updates a #${id} ambulanceSystem`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} ambulanceSystem`;
   }
 }

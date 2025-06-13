@@ -19,16 +19,16 @@ export class AmbulanceSystemController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ambulanceSystemService.findOne(+id);
+    return this.ambulanceSystemService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAmbulanceSystemDto: UpdateAmbulanceSystemDto) {
-    return this.ambulanceSystemService.update(+id, updateAmbulanceSystemDto);
+    return this.ambulanceSystemService.update(id, updateAmbulanceSystemDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.ambulanceSystemService.remove(+id);
+    return this.ambulanceSystemService.remove(id);
   }
 }
