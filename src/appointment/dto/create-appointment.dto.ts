@@ -29,7 +29,8 @@ export class CreateAppointmentDto {
   @Matches(/^\d{4}-\d{2}-\d{2}$/, {
     message: 'scheduledAt must be in YYYY-MM-DD format',
   })
-  scheduledAt?: string;
+    @Type(()=>Date)
+  scheduledAt?: Date;
 
   @IsEnum(Slot, {
     message: 'Slot should be one of morning, afternoon, or evening',
