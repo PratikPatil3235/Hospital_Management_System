@@ -15,8 +15,7 @@ export class CreateAmbulanceSystemDto {
   @IsDateString(
     {},
     {
-      message:
-        'bookedAt must be a valid ISO date string (e.g., 2025-06-13)',
+      message: 'bookedAt must be a valid ISO date string (e.g., 2025-06-13)',
     },
   )
   bookedAt?: string;
