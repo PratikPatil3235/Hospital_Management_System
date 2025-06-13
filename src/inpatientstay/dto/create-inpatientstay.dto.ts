@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsNotEmpty,
@@ -27,7 +28,8 @@ export class CreateInPatientStayDto {
   @Matches(/^\d{4}-\d{2}-\d{2}$/, {
     message: 'Admitted date must be in YYYY-MM-DD format',
   })
-  admittedAt?: string;
+  @Type(() => Date)
+  admittedAt?: Date;
 
   @IsOptional()
   @IsDateString(
@@ -39,7 +41,8 @@ export class CreateInPatientStayDto {
   @Matches(/^\d{4}-\d{2}-\d{2}$/, {
     message: 'Discharged date must be in YYYY-MM-DD format',
   })
-  dischargedAt?: string;
+    @Type(() => Date)
+  dischargedAt?: Date;
 
   @IsOptional()
   @IsString({ message: 'Notes should be a string' })

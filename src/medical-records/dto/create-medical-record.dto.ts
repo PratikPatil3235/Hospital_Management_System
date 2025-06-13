@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsInt,
@@ -49,7 +50,8 @@ export class CreateMedicalRecordDto {
   @Matches(/^\d{4}-\d{2}-\d{2}$/, {
     message: 'Recorded date must be in YYYY-MM-DD format',
   })
-  recorded_Date?: string;
+  @Type(() => Date)
+  recorded_Date?: Date;
 
   @IsUUID(4, { message: 'Patient ID must be a valid UUID v4' })
   @IsNotEmpty({ message: 'Patient ID is required' })

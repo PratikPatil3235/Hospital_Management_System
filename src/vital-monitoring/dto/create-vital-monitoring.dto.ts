@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsEnum,
@@ -51,5 +52,6 @@ export class CreateVitalMonitoringDto {
   @Matches(/^\d{4}-\d{2}-\d{2}$/, {
     message: 'Date must be in YYYY-MM-DD format',
   })
-  date?: string;
+  @Type(() => Date)
+  date?: Date;
 }
