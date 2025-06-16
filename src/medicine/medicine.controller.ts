@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpStatus,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { MedicineService } from './medicine.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
@@ -8,27 +18,50 @@ export class MedicineController {
   constructor(private readonly medicineService: MedicineService) {}
 
   @Post()
-  create(@Body() createMedicineDto: CreateMedicineDto) {
-    return this.medicineService.create(createMedicineDto);
+  async create(@Body() createMedicineDto: CreateMedicineDto) {
+    const data = await this.medicineService.create(createMedicineDto);
+    return {
+      status: HttpStatus.CREATED,
+      message: 'Medicine created Succesfully',
+      data,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.medicineService.findAll();
+  async findAll() {
+    const data = await this.medicineService.findAll();
+    return {
+      status: HttpStatus.OK,
+      message: 'All Medicines fetched Succesfully',
+      data,
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.medicineService.findOne(+id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string) {
+    const data = await this.medicineService.findOne(id);
+    return {
+      status: HttpStatus.OK,
+      message: 'Medicine Fetch Succesfully',
+      data,
+    };
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMedicineDto: UpdateMedicineDto) {
-    return this.medicineService.update(+id, updateMedicineDto);
+  @Patch('/:id')
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateMedicineDto: UpdateMedicineDto,
+  ) {
+    const data = await this.medicineService.update(id, updateMedicineDto);
+    return {
+      status: HttpStatus.OK,
+      message: 'Medicine updated Succesfully',
+      data,
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.medicineService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.medicineService.remove(id);
   }
 }

@@ -3,14 +3,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Medicine {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  m_Id: string;
 
-  @Column({ length: 200 })
+  @Column({ length: 200, unique: true })
   medicineName: string;
 
   @Column()
   price: number;
 
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamptz' })
   expireDate: Date;
 }
