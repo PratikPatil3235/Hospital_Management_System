@@ -15,13 +15,15 @@ import {
 export class CreateMedicineDto {
   @IsString({ message: 'Entered value should be string' })
   @IsNotEmpty({ message: 'Name is a required field' })
-      @MinLength(2, { message: 'Name of medicine should have at least 2 characters' })
+  @MinLength(2, {
+    message: 'Name of medicine should have at least 2 characters',
+  })
   @MaxLength(200, {
     message: 'Name of medicine should in between 1-200 characters',
   })
   medicineName: string;
 
-    @Type(()=>Number)
+  @Type(() => Number)
   @IsInt({ message: 'Price should be a number' })
   @IsNotEmpty({ message: 'Prise is a required field' })
   @Min(0, { message: 'Minimum price start from 0' })
