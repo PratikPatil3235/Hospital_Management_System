@@ -1,26 +1,100 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateInPatientStayDto } from './dto/create-inpatientstay.dto';
 import { UpdateInpatientstayDto } from './dto/update-inpatientstay.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { InPatientStay } from './entities/inpatientstay.entity';
+import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
 export class InPatientStayService {
-  create(createInpatientstayDto: CreateInPatientStayDto) {
-    return 'This action adds a new inpatientstay';
+  constructor(
+    @InjectRepository(InPatientStay)
+    private readonly inpatientStayepository: Repository<InPatientStay>,
+  ) {}
+
+  async create(
+    createInpatientstayDto: CreateInPatientStayDto,
+  ): Promise<InPatientStay> {
+    try {
+      const inPatientStay = this.inpatientStayepository.create({
+        patientId: createInpatientstayDto.patientId,
+        doctorId: createInpatientstayDto.doctorId,
+        admittedAt: createInpatientstayDto.admittedAt,
+        notes: createInpatientstayDto.notes,
+        dischargedAt: createInpatientstayDto.dischargedAt,
+        nurseId: createInpatientstayDto.nurseId,
+      });
+
+      return await this.inpatientStayepository.save(inPatientStay);
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `There is some issue please try again later`,
+      );
+    }
   }
 
-  findAll() {
-    return `This action returns all inpatientstay`;
+  findAll(): Promise<InPatientStay[]> {
+    try {
+      return this.inpatientStayepository.find();
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `There is some issue please try again later...`,
+      );
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} inpatientstay`;
+  async findOne(id: string): Promise<InPatientStay> {
+    const inpatientstay = await this.inpatientStayepository.findOne({
+      where: { id },
+    });
+    if (!inpatientstay) {
+      throw new NotFoundException(`Cannot found a patient in our system`);
+    }
+    return inpatientstay;
   }
 
-  update(id: number, updateInpatientstayDto: UpdateInpatientstayDto) {
-    return `This action updates a #${id} inpatientstay`;
+  async update(
+    id: string,
+    updateInpatientstayDto: UpdateInpatientstayDto,
+  ): Promise<InPatientStay> {
+    const inpatientstay = await this.inpatientStayepository.findOne({
+      where: { id },
+    });
+    if (!inpatientstay) {
+      throw new NotFoundException(`Cannot found a patient in our system`);
+    }
+
+    inpatientstay.admittedAt = updateInpatientstayDto.admittedAt
+      ? new Date(updateInpatientstayDto.admittedAt)
+      : inpatientstay.admittedAt;
+
+    inpatientstay.dischargedAt = updateInpatientstayDto.dischargedAt
+      ? new Date(updateInpatientstayDto.dischargedAt)
+      : inpatientstay.dischargedAt;
+
+    inpatientstay.doctorId =
+      updateInpatientstayDto.doctorId ?? inpatientstay.doctorId;
+
+    inpatientstay.notes = updateInpatientstayDto.notes ?? inpatientstay.notes;
+
+    inpatientstay.nurseId =
+      updateInpatientstayDto.nurseId ?? inpatientstay.nurseId;
+
+    inpatientstay.patientId =
+      updateInpatientstayDto.patientId ?? inpatientstay.patientId;
+
+    return await this.inpatientStayepository.save(inpatientstay);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} inpatientstay`;
+  async remove(id: string): Promise<DeleteResult> {
+    const result = await this.inpatientStayepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Patient with id not found`);
+    }
+    return result;
   }
 }

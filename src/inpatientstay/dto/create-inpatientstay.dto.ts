@@ -25,11 +25,7 @@ export class CreateInPatientStayDto {
       message: 'Admitted date must be a valid ISO format date string',
     },
   )
-  @Matches(/^\d{4}-\d{2}-\d{2}$/, {
-    message: 'Admitted date must be in YYYY-MM-DD format',
-  })
-  @Type(() => Date)
-  admittedAt?: Date;
+  admittedAt?: string;
 
   @IsOptional()
   @IsDateString(
@@ -38,11 +34,7 @@ export class CreateInPatientStayDto {
       message: 'Discharged date must be a valid ISO format date string',
     },
   )
-  @Matches(/^\d{4}-\d{2}-\d{2}$/, {
-    message: 'Discharged date must be in YYYY-MM-DD format',
-  })
-    @Type(() => Date)
-  dischargedAt?: Date;
+  dischargedAt?: string;
 
   @IsOptional()
   @IsString({ message: 'Notes should be a string' })
