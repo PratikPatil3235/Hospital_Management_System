@@ -18,9 +18,5 @@ export class CreateOutPatientVisitDto {
 
   @IsOptional()
   @IsDateString({}, { message: 'Visited date must be a valid ISO date string' })
-  @Matches(/^\d{4}-\d{2}-\d{2}$/, {
-    message: 'Visited date must be in YYYY-MM-DD format',
-  })
-  @Type(() => Date)
-  visitedDate?: Date;
+  visitedDate?: string;
 }
